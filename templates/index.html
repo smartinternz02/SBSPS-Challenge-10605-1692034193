@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!----======== CSS ======== -->
+    <link rel="stylesheet" href="../static/css/style.css">     
+  
+    <title>Crop-Estimation </title>
+    <style></style> 
+</head>
+<body>
+
+    
+    <div class="container" id="formContainer" {% if prediction_result is not none %}style="display: none;"{% endif %}>
+
+
+        <header>Crop-Estimation</header>
+
+
+        <form  action="/index" method="POST" name="contactForm" onsubmit="return validateForm()">
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Details</span>
+
+                    <div class="fields">
+                        <div class="input-field">
+    <label>State: <span class="error" id="StateErr" style="color: red;"></span></label>
+    <select id="state" name="state" required>
+        <option disabled selected value="0">Select State</option>
+    </select>
+</div>
+
+        <div class="input-field">
+            <label>District:<span class="error" id="DistrictErr" style="color: red;"></span></label>
+            <select id="district" name="district"><!--required-->
+                <option disabled selected value="0">Select District</option>
+            </select>
+        </div>
+<div class="input-field">
+    <label>Crop <span class="error" id="cropErr" style="color: red;"></span></label>
+    <select id="crop" name="crop"><!--required-->
+        <option disabled selected value="0">Select Crop</option>
+    </select>
+</div>
+
+<div class="input-field">
+    <label>Season <span class="error" id="seasonErr" style="color: red;"></span></label>
+    <select id="season" name="season"><!--required-->
+        <option disabled selected value="0">Select Season</option>
+    </select>
+</div>
+                        
+
+                        <div class="input-field">
+                            <label for="year">Select a year: <span class="error" id="yearErr" style="color: red;"></span></label>
+                            <select id="year" name="year"></select>
+                        </div>
+
+                        <div class="input-field">
+            <label>Area (in hectre): <span class="error" id="areaErr" style="color: red;"></span></label>
+            <input type="text" step="0.01" placeholder="Enter Area" name="area" id="area" required>
+        </div>
+
+                        
+                    </div>
+                </div>
+
+                
+                        <br>
+                        <button class="sumbit" style="display: block; margin: 0 auto;">
+                            <span class="btnText" >Submit ✔</span>
+                            <!-- <i class="uil uil-navigator"></i> -->
+                        </button>               
+                    </div>
+                </div> 
+            </div>
+
+        </form>
+    </div>
+<div class="container" id="predictionContainer" {% if prediction_result is none %}style="display: none;"{% endif %}>
+
+        <header>Result</header>
+
+        <div class="loading-gif-container">
+            <div class="loading-gif" id="loadingGif" {% if prediction_result is not none %}style="display: none;"{% endif %}>
+            </div>
+        </div>
+        
+        <div class="prediction-box" {% if prediction_result is none %}style="display: none;"{% endif %}>
+            <div class="form-values">
+            <br>
+        <h3>Entered Values:</h3>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>{{ state }}</td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td>{{ district }}</td>
+            </tr>
+            <tr>
+                <td>Crop</td>
+                <td>{{ crop }}</td>
+            </tr>
+            <tr>
+                <td>Season</td>
+                <td>{{ season }}</td>
+            </tr>
+            <tr>
+                <td>Year</td>
+                <td>{{ year }}</td>
+            </tr>
+            <tr>
+                <td>Area</td>
+                <td>{{ area }} hectares</td>
+            </tr>
+        </table>
+    </div>
+    <p class="prediction-value">Estimated Production: {{ prediction_result }} {{unit}}</p>
+    <br>
+</div>
+<br>
+        <button class="backBtn" id="backButton" style="display: block; margin: 0 auto;">
+    <span class="btnText">Back</span>
+</button>
+
+    </div>
+
+
+    
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
